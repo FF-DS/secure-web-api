@@ -1,0 +1,19 @@
+steps:
+  - name: node
+    entrypoint: npm
+    args: ["install"]
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["build", "-t", "gcr.io/friendly-beach-291213/tendermap-api:$SHORT_SHA", "."]
+  - name: "gcr.io/cloud-builders/docker"
+    args: ["push", "gcr.io/friendly-beach-291213/tendermap-api:$SHORT_SHA"]
+  - name: "gcr.io/cloud-builders/gcloud"
+    args:
+      [
+        "beta",
+        "run",
+        "deploy",
+        "tendermap-api",
+        "--region=us-east4",
+        "--platform=managed",
+        "--image=gcr.io/friendly-beach-291213/tendermap-api:$SHORT_SHA",
+      ]

@@ -1,0 +1,63 @@
+{
+  "name": "compliant_system",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "Mohammed Alewi",
+  "license": "ISC",
+  "bugs": {
+    "url": ""
+  },
+  "homepage": "",
+  "dependencies": {
+    "@google-cloud/storage": "^5.4.0",
+    "@socketlabs/email": "^1.1.0",
+    "accesscontrol": "^2.2.1",
+    "axios": "^0.21.1",
+    "bcrypt": "^5.0.1",
+    "body-parser": "^1.19.0",
+    "cloudinary": "^1.26.1",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "datauri": "^3.0.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.2.1",
+    "express-validator": "^6.6.1",
+    "geoip-lite": "^1.4.2",
+    "joe": "^2.0.2",
+    "joi": "^17.3.0",
+    "jsonwebtoken": "^8.5.1",
+    "loadash": "^1.0.0",
+    "mongoose": "^5.10.9",
+    "mongoose-data-faker": "^0.1.2",
+    "mongoose-data-seed": "^2.1.6",
+    "multer": "^1.4.2",
+    "multer-storage-cloudinary": "^4.0.0",
+    "node-fetch": "^2.6.1",
+    "path": "^0.12.7",
+    "sib-api-v3-sdk": "^8.0.1",
+    "streamifier": "^0.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^7.12.1",
+    "eslint-config-standard": "^15.0.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.2",
+    "nodemon": "^2.0.6"
+  },
+  "engines": {
+    "node": "12.14.0",
+    "npm": "6.13.4"
+  }
+}

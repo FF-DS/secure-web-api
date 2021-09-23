@@ -1,0 +1,41 @@
+0 info it worked if it ends with ok
+1 verbose cli [
+1 verbose cli   '/usr/local/lib/nodejs/bin/nodejs',
+1 verbose cli   '/usr/bin/npm',
+1 verbose cli   'install',
+1 verbose cli   'nodemon',
+1 verbose cli   '-g'
+1 verbose cli ]
+2 info using npm@3.5.2
+3 info using node@v12.14.0
+4 verbose stack Error: Cannot find module 'ansi'
+4 verbose stack Require stack:
+4 verbose stack - /usr/share/npm/lib/ls.js
+4 verbose stack - /usr/share/npm/lib/install.js
+4 verbose stack - /usr/share/npm/lib/npm.js
+4 verbose stack - /usr/share/npm/bin/npm-cli.js
+4 verbose stack     at Function.Module._resolveFilename (internal/modules/cjs/loader.js:797:15)
+4 verbose stack     at Function.Module._load (internal/modules/cjs/loader.js:690:27)
+4 verbose stack     at Module.require (internal/modules/cjs/loader.js:852:19)
+4 verbose stack     at require (internal/modules/cjs/helpers.js:74:18)
+4 verbose stack     at Object.<anonymous> (/usr/share/npm/lib/ls.js:15:13)
+4 verbose stack     at Module._compile (internal/modules/cjs/loader.js:959:30)
+4 verbose stack     at Object.Module._extensions..js (internal/modules/cjs/loader.js:995:10)
+4 verbose stack     at Module.load (internal/modules/cjs/loader.js:815:32)
+4 verbose stack     at Function.Module._load (internal/modules/cjs/loader.js:727:14)
+4 verbose stack     at Module.require (internal/modules/cjs/loader.js:852:19)
+5 verbose cwd /home/maroc/Documents/projects/TenderMap/tendermap_web_node_api
+6 error Linux 4.15.0-88-generic
+7 error argv "/usr/local/lib/nodejs/bin/nodejs" "/usr/bin/npm" "install" "nodemon" "-g"
+8 error node v12.14.0
+9 error npm  v3.5.2
+10 error code MODULE_NOT_FOUND
+11 error Cannot find module 'ansi'
+11 error Require stack:
+11 error - /usr/share/npm/lib/ls.js
+11 error - /usr/share/npm/lib/install.js
+11 error - /usr/share/npm/lib/npm.js
+11 error - /usr/share/npm/bin/npm-cli.js
+12 error If you need help, you may report this error at:
+12 error     <https://github.com/npm/npm/issues>
+13 verbose exit [ 1, true ]
