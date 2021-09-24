@@ -36,6 +36,9 @@ exports.log_in = async (req, res) => {
     if (user.account_trial == 0) {
       user.account_state = "Blocked";
       await user.save();
+    } else {
+      user.account_trial -= 1;
+      await user.save();
     }
 
     return res.status(403).send({
