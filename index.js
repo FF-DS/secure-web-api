@@ -12,6 +12,7 @@ const compliantRouter = require("./routes/services/CompliantControllerRoute");
 const CompliantUserRoute = require("./routes/services/CompliantUserControllerRoute");
 const userRouter = require("./routes/accounts/AuthControllerRoute");
 const accountsRouter = require("./routes/accounts/AccountsControllerRoute");
+const cookieParser = require("cookie-parser");
 //end-routers
 
 const app = express();
@@ -22,6 +23,7 @@ app.use(compression({ filter: shouldCompress }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(fileupload({ useTempFiles: true }));
+app.use(cookieParser());
 
 // file service
 app.use(cloudinaryConfig);
