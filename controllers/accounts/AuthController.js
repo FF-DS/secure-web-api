@@ -32,14 +32,20 @@ exports.log_in = async (req, res) => {
 
   let result = await bcrypt.compare(req.body.password, user.password);
 
-  if (!result)
+  if (!result) {
+    if (user.account_trial == 0) {
+      user.account_state = "Blocked";
+      await user.save();
+    }
+
     return res.status(403).send({
       email: {
         value: req.body.email,
-        msg: "Invalid email or password.",
+        msg: "Invalid email or password. ",
         param: "email",
       },
     });
+  }
 
   if (user.account_state == "Blocked")
     return res.status(401).send({
@@ -49,6 +55,9 @@ exports.log_in = async (req, res) => {
         param: "email",
       },
     });
+
+  user.account_trial = 3;
+  await user.save();
 
   const token = user.generateAuthToken(user);
   user.password = "";

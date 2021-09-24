@@ -43,6 +43,10 @@ const UserSchema = new mongoose.Schema(
       default: "Unblocked",
       enum: ["Unblocked", "Blocked"],
     },
+    account_trial: {
+      type: Number,
+      default: 3,
+    },
   },
   {
     timestamps: { createdAt: "created_at", updatedAt: "updated_at" },
