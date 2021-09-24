@@ -18,12 +18,20 @@ const cookieParser = require("cookie-parser");
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(cors());
+const csrf = require("csurf");
+const corsOptions = {
+  origin: "https://complaint-web.herokuapp.com", //"http://localhost:8080",
+  credentials: true,
+};
+app.use(cors(corsOptions));
+
 app.use(compression({ filter: shouldCompress }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(fileupload({ useTempFiles: true }));
+
 app.use(cookieParser());
+app.use(csrf({ cookie: true }));
 
 // file service
 app.use(cloudinaryConfig);

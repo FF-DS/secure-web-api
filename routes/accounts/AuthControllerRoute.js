@@ -10,9 +10,6 @@ const {
 const { multerUploads } = require("../../config/multerConfig");
 const { sendUploadToGCS } = require("../../middlewares/CloudinaryCloudStorage");
 
-var csrf = require("csurf");
-var csrfProtection = csrf({ cookie: true });
-
 // Require controller modules.
 var authController = require("../../controllers/accounts/AuthController");
 
@@ -22,13 +19,7 @@ router.get("/api/auth/logout", auth, authController.log_out);
 router.post("/api/auth/register", UserValidator, authController.post_user);
 router.post("/api/auth/login", LoginValidator, authController.log_in);
 
-router.put(
-  "/api/user",
-  auth,
-  UserUpdateValidator,
-  csrfProtection,
-  authController.update_user
-);
+router.put("/api/user", auth, UserUpdateValidator, authController.update_user);
 router.delete("/api/user", auth, authController.delete_user);
 
 //profile
@@ -40,7 +31,7 @@ router.post(
   authController.upload_profile
 );
 
-router.get("/api/getcsrftoken", csrfProtection, function (req, res) {
+router.get("/api/getcsrftoken", function (req, res) {
   return res.json({ csrfToken: req.csrfToken() });
 });
 
