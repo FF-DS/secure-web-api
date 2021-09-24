@@ -22,7 +22,13 @@ router.get("/api/auth/logout", auth, authController.log_out);
 router.post("/api/auth/register", UserValidator, authController.post_user);
 router.post("/api/auth/login", LoginValidator, authController.log_in);
 
-router.put("/api/user", auth, UserUpdateValidator, authController.update_user);
+router.put(
+  "/api/user",
+  auth,
+  UserUpdateValidator,
+  csrfProtection,
+  authController.update_user
+);
 router.delete("/api/user", auth, authController.delete_user);
 
 //profile
