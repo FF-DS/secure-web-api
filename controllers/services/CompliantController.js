@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const { Compliant } = require("../../models/services/Compliant");
 const { validationResult } = require("express-validator");
+const { User } = require("../../models/accounts/User");
 const _ = require("lodash");
 const cloudinary = require("cloudinary").v2;
 
@@ -40,6 +41,17 @@ function getFilters(req) {
 exports.get_compliants = async (req, res) => {
   let filters = getFilters(req);
 
+  // --------- check ------------- //
+  let user = await User.findById(req.user._id);
+  if (user.account_state == "Blocked")
+    return res.status(401).send({
+      data_count: 0,
+      page_size: 0,
+      current_page: 0,
+      data: [],
+    });
+  // --------- check ------------- //
+
   let count = await Compliant.countDocuments(filters);
 
   const page = parseInt(req.query.page) || 1;
@@ -65,6 +77,14 @@ exports.get_compliants = async (req, res) => {
 
 exports.get_compliant_by_id = async (req, res) => {
   try {
+    // --------- check ------------- //
+    let user = await User.findById(req.user._id);
+    if (user.account_state == "Blocked")
+      return res.status(401).send({
+        compliant: {},
+      });
+    // --------- check ------------- //
+
     let compliant = await Compliant.findById(req.params.id).populate({
       path: "creator_user",
       select: "-__v -password",
@@ -99,6 +119,17 @@ exports.post_compliant = async (req, res) => {
     return res.status(422).jsonp(errors.mapped());
   }
 
+  // --------- check ------------- //
+  let user = await User.findById(req.user._id);
+  if (user.account_state == "Blocked")
+    return res.status(401).send({
+      email: {
+        msg: "Sorry it seems there is issue with your account, please login again.",
+        param: "title",
+      },
+    });
+  // --------- check ------------- //
+
   let compliant = new Compliant(_.pick(req.body, ["title", "details"]));
 
   try {
@@ -119,6 +150,17 @@ exports.update_compliant = async (req, res) => {
     return res.status(422).jsonp(errors.mapped());
   }
 
+  // --------- check ------------- //
+  let user = await User.findById(req.user._id);
+  if (user.account_state == "Blocked")
+    return res.status(401).send({
+      email: {
+        msg: "Sorry it seems there is issue with your account, please login again.",
+        param: "title",
+      },
+    });
+  // --------- check ------------- //
+
   try {
     await Compliant.findByIdAndUpdate(
       req.params.id,
@@ -132,6 +174,17 @@ exports.update_compliant = async (req, res) => {
 
 exports.delete_compliant = async (req, res) => {
   try {
+    // --------- check ------------- //
+    let user = await User.findById(req.user._id);
+    if (user.account_state == "Blocked")
+      return res.status(401).send({
+        email: {
+          message:
+            "Sorry it seems there is issue with your account, please login again.",
+        },
+      });
+    // --------- check ------------- //
+
     let compliant = await Compliant.findById(req.params.id);
     await Compliant.findByIdAndDelete(req.params.id);
 
@@ -145,6 +198,17 @@ exports.delete_compliant = async (req, res) => {
 };
 
 exports.upload_compliant_file = async (req, res) => {
+  // --------- check ------------- //
+  let user = await User.findById(req.user._id);
+  if (user.account_state == "Blocked")
+    return res.status(401).send({
+      email: {
+        message:
+          "Sorry it seems there is issue with your account, please login again.",
+      },
+    });
+  // --------- check ------------- //
+
   if (req.files && req.files.gcsUrl) {
     try {
       let compliant = await Compliant.findById(req.params.id);
@@ -165,6 +229,17 @@ exports.upload_compliant_file = async (req, res) => {
 };
 
 exports.update_compliant_file = async (req, res) => {
+  // --------- check ------------- //
+  let user = await User.findById(req.user._id);
+  if (user.account_state == "Blocked")
+    return res.status(401).send({
+      email: {
+        message:
+          "Sorry it seems there is issue with your account, please login again.",
+      },
+    });
+  // --------- check ------------- //
+
   try {
     let compliant = await Compliant.findById(req.params.id);
     await deletFiles(compliant.file_links, req.body.file_links);

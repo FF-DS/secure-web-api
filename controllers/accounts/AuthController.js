@@ -77,6 +77,17 @@ exports.change_password = async (req, res) => {
     let user = await User.findById(req.user._id);
     let result = await bcrypt.compare(req.body.old_password, user.password);
 
+    // --------- check ------------- //
+    if (user.account_state == "Blocked")
+      return res.status(401).send({
+        email: {
+          value: req.body.email,
+          msg: "Sorry it seems there is issue with your account, please login again.",
+          param: "password",
+        },
+      });
+    // --------- check ------------- //
+
     if (!result)
       return res.status(403).send({
         password: {
@@ -171,6 +182,17 @@ exports.update_user = async (req, res) => {
 
   let user = await User.findById(req.user._id);
 
+  // --------- check ------------- //
+  if (user.account_state == "Blocked")
+    return res.status(401).send({
+      email: {
+        value: req.body.email,
+        msg: "Sorry it seems there is issue with your account, please login again.",
+        param: "password",
+      },
+    });
+  // --------- check ------------- //
+
   user.name = req.body.name || user.name;
   user.phone_number = req.body.phone_number || user.phone_number;
   user.address = req.body.address || user.address;
@@ -191,6 +213,15 @@ exports.upload_profile = async (req, res) => {
   if (req.files && req.files.gcsUrl) {
     try {
       let user = await User.findById(req.user._id);
+
+      // --------- check ------------- //
+      if (user.account_state == "Blocked")
+        return res.status(401).send({
+          email: {
+            msg: "Sorry it seems there is issue with your account, please login again.",
+          },
+        });
+      // --------- check ------------- //
 
       if (user.avatar) {
         await cloudinary.uploader.destroy(
